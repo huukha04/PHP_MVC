@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Media</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/mazor/assets/compiled/css/app.css">
+    <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/mazor/assets/compiled/css/app-dark.css">
+
+
+
+</head>
+<script src="http://localhost/CO3049_assignment/public/mazor/assets/static/js/initTheme.js"></script>
+
+<body>
+    
+<div id="app">
+    <div id="sidebar"></div>
+
+    <div id="main">
+        <header class="mb-3 navbar">
+            <div class="d-flex gap-5">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+                <h1>Media</h1>
+            </div>
+            <div>
+            </div>
+            <div class="d-flex gap-1">
+                <a href="http://localhost/CO3049_assignment/public/main/home" class="btn btn-primary rounded-pill text-white text-decoration-none fw-bold">Quan sát</a>
+                <a href="http://localhost/CO3049_assignment/public/auth/logout" class="btn text-decoration-none fw-bold text-danger">Đăng xuất</a>
+
+            </div>
+        </header>
+        
+        <section class="row">
+            <div class="page-heading">
+                <h3>Thêm mới</h3>
+            </div> 
+            <div class="page-content">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Thêm mới</h4>
+                        </div>  
+                        <div class="card-body">
+
+                            <!-- File -->
+                            <div class="mb-3">
+                                <label for="file" class="form-label">
+                                    Chọn ảnh <span class="text-danger">*</span>
+                                </label>
+                                <input type="file" class="form-control" id="file" accept="image/*" required>
+                                <input type="hidden" class="form-control" id="path">
+                            </div>
+                            <form id="mediaForm" enctype="multipart/form-data">
+                                
+                                <!-- Type -->
+                                <div class="mb-3">
+                                    <label for="type" class="form-label">
+                                        Loại tệp
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select" id="type" name="type" required>
+                                        <option value="movie">Movie</option>
+                                        <option value="poster">Poster</option>
+                                        <option value="deal">Deal</option>
+                                    </select>
+                                </div>
+                                <!-- Tittle -->
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">
+                                        Tiêu đề
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="title" name="title" required>
+                                </div>
+                                <!-- Mô tả -->
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">
+                                        Mô tả
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="description" name="description" required>
+                                </div>   
+                                <!-- Status -->
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">
+                                        Trạng thái
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select" id="status" name="status" required>
+                                        <option value="Showing">Showing</option>
+                                        <option value="Hidden">Hidden</option>
+                                    </select>
+                                </div>     
+                                <!-- Ngày bắt đầu -->
+                                <div class="mb-3">
+                                    <label for="start_date" class="form-label">
+                                        Ngày bắt đầu
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="date" class="form-control" id="start_date" name="start_date" required>
+                                </div>
+                
+                                <!-- Ngày kết thúc -->
+                                <div class="mb-3">
+                                    <label for="end_date" class="form-label">
+                                        Ngày kết thúc
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="date" class="form-control" id="end_date" name="end_date" required>
+                                </div>
+                                <div id="infoMovie" class="d-none">
+                                    <div class="mb-3">
+                                        <label for="duration" class="form-label">Thời lượng (phút)</label>
+                                        <input type="number" class="form-control" id="duration" name="duration" required>
+                                    </div>
+                                
+                                    <div class="mb-3">
+                                        <label for="genre" class="form-label">Thể loại</label>
+                                        <input type="text" class="form-control" id="genre" name="genre" required>
+                                    </div>
+                                
+                                    <div class="mb-3">
+                                        <label for="trailer" class="form-label">URL Trailer</label>
+                                        <input type="url" class="form-control" id="trailer" name="trailer">
+                                    </div>
+                                
+                                    <div class="mb-3">
+                                        <label for="language" class="form-label">Ngôn ngữ</label>
+                                        <input type="text" class="form-control" id="language" name="language" required>
+                                    </div>
+                                
+                                    <div class="mb-3">
+                                        <label for="country" class="form-label">Quốc gia sản xuất</label>
+                                        <input type="text" class="form-control" id="country" name="country" required>
+                                    </div>
+                                
+                                    <div class="mb-3">
+                                        <label for="classification" class="form-label">
+                                            Phân loại phim
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-select" id="classification" name="classification" required>
+                                            <option value="P">P</option>
+                                            <option value="K">K</option>
+                                            <option value="T13">T13</option>
+                                            <option value="T16">T16</option>
+                                            <option value="T18">T18</option>
+                                            <option value="C">C</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="message" class="text-center mb-3"></div>
+
+
+                            </form>
+                            <button onclick="insertMedia()" class="btn btn-success">Lưu</button>
+
+
+                        </div>  
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+        <!--  -->
+        <section class="row">
+            <div class="page-heading">
+                <h3>Chỉnh sửa</h3>
+            </div> 
+            <div class="page-content">
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Chọn loại:</label>
+                              
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="typeGet" value="movie" id="movie" checked>
+                                  <label class="form-check-label" for="movie">Movie</label>
+                                </div>
+                              
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="typeGet" value="poster" id="poster">
+                                  <label class="form-check-label" for="poster">Poster</label>
+                                </div>
+                              
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="typeGet" value="deal" id="deal">
+                                  <label class="form-check-label" for="deal">Deal</label>
+                                </div>
+                              </div>
+                              
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="d-flex mb-3 justify-content-between align-items-center">
+                                <input type="text" id="searchInput" class="form-control w-50" placeholder="Tìm kiếm...">
+                                <select id="limit" class="form-select w-auto">
+                                    <option value="5">Hiển thị 5</option>
+                                    <option value="10">Hiển thị 10</option>
+                                    <option value="20">Hiển thị 20</option>
+                                </select>
+                            </div>
+                            <div style="overflow-x: auto;">
+                                <table class="table table-striped" >
+                                    <thead id="tableHead"></thead>
+                                    <tbody id="tableBody"></tbody>
+                                </table>
+                            </div>
+                            
+                    
+                            <nav>
+                                <ul class="pagination" id="pagination"></ul>
+                            </nav>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+
+
+<div id="mediaModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediaModalLabel">Media Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Nội dung chi tiết media sẽ được thêm vào đây -->
+                <div id="mediaDetails"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="updateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediaModalLabel">Media Details</h5>
+            </div>
+            <div class="modal-body">
+                <!-- Thêm các trường input cho các thuộc tính -->
+                <div class="mb-3">
+                    <div id="img" class="text-center"></div>
+                </div>
+                <form id="updateForm">
+                    <div class="mb-3">
+                        <label for="id" class="form-label">
+                            ID
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" name="id" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Type</label>
+                        <input type="text" class="form-control" name="type" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" class="form-control" name="description">
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <input type="text" class="form-control" name="status">
+                    </div>
+                    <div class="mb-3">
+                        <label for="start_date" class="form-label">Start Date</label>
+                        <input type="date" class="form-control" name="start_date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="end_date" class="form-label">End Date</label>
+                        <input type="date" class="form-control" name="end_date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="duration" class="form-label">Duration</label>
+                        <input type="number" class="form-control" name="duration">
+                    </div>
+                    <div class="mb-3">
+                        <label for="genre" class="form-label">Genre</label>
+                        <input type="text" class="form-control" name="genre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="trailer" class="form-label">Trailer</label>
+                        <input type="text" class="form-control" name="trailer">
+                    </div>
+                    <div class="mb-3">
+                        <label for="language" class="form-label">Language</label>
+                        <input type="text" class="form-control" name="language">
+                    </div>
+                    <div class="mb-3">
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" class="form-control" name="country">
+                    </div>
+                    <div class="mb-3">
+                        <label for="classification" class="form-label">Classification</label>
+                        <input type="text" class="form-control" name="classification">
+                    </div>
+                </form>
+                <div id="updateMessage" class="text-center mb-3"></div>
+                <button onclick="updateMedia()" class="btn btn-success">Lưu</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="theme-toggle d-flex gap-2  align-items-center mt-2">
+    <style>
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px; /* Khoảng cách từ dưới lên */
+            right: 20px;   /* Khoảng cách từ trái qua */
+            z-index: 9999; /* Đảm bảo phần tử nằm trên cùng */
+        }
+    
+    </style>
+    
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+        role="img" class="iconify iconify--system-uicons" width="20" height="20"
+        preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
+        <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path
+                d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2"
+                opacity=".3"></path>
+            <g transform="translate(-210 -1)">
+                <path d="M220.5 2.5v2m6.5.5l-1.5 1.5"></path>
+                <circle cx="220.5" cy="11.5" r="4"></circle>
+                <path d="m214 5l1.5 1.5m5 14v-2m6.5-.5l-1.5-1.5M214 18l1.5-1.5m-4-5h2m14 0h2"></path>
+            </g>
+        </g>
+    </svg>
+    <div class="form-check form-switch fs-6">
+        <input class="form-check-input" type="checkbox" id="toggle-dark" style="cursor: pointer">
+        <label class="form-check-label"></label>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+        role="img" class="iconify iconify--mdi" width="20" height="20" preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 24 24">
+        <path fill="currentColor"
+            d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z">
+        </path>
+    </svg>
+</div>
+
+
+</body>
+<script>
+    loadSidebar();
+
+async function loadSidebar() {
+    const response = await fetch('http://localhost/CO3049_assignment/public/component/sidebar');
+    const res= await response.text();
+    document.getElementById('sidebar').innerHTML = res;
+}
+
+    window.onload = function() {
+        handleTypeChange();
+        
+        fetchAndRenderTable();
+    };
+
+
+    document.getElementById("type").addEventListener("change", handleTypeChange);
+    function handleTypeChange() {
+        const selectedType = document.getElementById("type").value;
+        const infoMovie = document.getElementById("infoMovie");
+
+        if (selectedType === "movie") {
+        infoMovie.classList.remove("d-none");
+        } else {
+        infoMovie.classList.add("d-none");
+        }
+    }
+
+    async function insertMedia() {
+        try {
+            dataForm = new FormData(document.getElementById('mediaForm'));
+            dataForm.append('file', document.getElementById('file').files[0]);
+
+            const response = await fetch('http://localhost/CO3049_assignment/public/admin/insertMedia', {
+                method: 'POST',
+                body: dataForm
+            });
+            const res = await response.json();
+            if (res.status) {
+                document.getElementById('message').innerHTML = 'Thêm mới thành công!';
+                document.getElementById('message').style.color = 'green';
+                document.getElementById('mediaForm').reset();
+            } else {
+                document.getElementById('message').innerHTML = res.message || 'Thêm mới thất bại!';
+                document.getElementById('message').style.color = 'red';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('message').innerHTML = 'Đã xảy ra lỗi!';
+            document.getElementById('message').style.color = 'red';
+        }
+
+
+
+    }
+
+    document.querySelectorAll('input[name="typeGet"]').forEach((radio) => {
+        radio.addEventListener('change', fetchAndRenderTable);
+    });
+    function fetchAndRenderTable() {
+        const type = document.querySelector('input[name="typeGet"]:checked').value;
+
+        let tableHead = document.querySelector("#tableHead");
+        let tableBody = document.querySelector("#tableBody");
+        let searchInput = document.querySelector("#searchInput");
+        let pagination = document.querySelector("#pagination");
+        let limitSelect = document.querySelector("#limit");
+
+        // Xóa nội dung bảng
+        tableHead.innerHTML = "";
+        tableBody.innerHTML = "";
+
+        // Reset ô tìm kiếm
+        searchInput.value = "";
+
+        // Xóa phân trang
+        pagination.innerHTML = "";
+        fetchData(type);
+        let rowsPerPage = parseInt(limitSelect.value);
+        let currentPage = 1;
+        let maxPageButtons = 5;
+
+        function renderTableHead() {
+            if (!data.length) return;
+            let keys = Object.keys(data[0]);
+            tableHead.innerHTML = "";
+            tableHead.innerHTML = `
+                <tr>
+                    <th>#</th>
+                    <th>Action</th>
+                    ${keys.map(key => `<th>${key}</th>`).join("")}
+                </tr>
+                `;
+
+        }
+
+        function renderTable() {
+            let filteredData = data.filter(row => {
+                let searchTerm = searchInput.value.toLowerCase();
+                return Object.values(row).some(value => value.toString().toLowerCase().includes(searchTerm));
+            });
+
+            let start = (currentPage - 1) * rowsPerPage;
+            let paginatedData = filteredData.slice(start, start + rowsPerPage);
+            tableBody.innerHTML = "";
+            tableBody.innerHTML = paginatedData.map((row, index) => {
+                return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td >
+                            <div class="d-flex gap-2">
+                                <button onclick="editMedia(${row.id})" class="btn btn-sm btn-primary">Edit</button>
+                                <button onclick="deleteMedia(${row.id})" class="btn btn-sm btn-danger">Delete</button>
+                                <button onclick="viewMedia(${row.id})" class="btn btn-sm btn-success">View</button>
+                            </div>
+                        </td>
+                        ${Object.values(row).map(value => `<td>${value || ''}</td>`).join("")}
+                    </tr>
+                `;
+            }).join("");
+
+        }
+
+        function renderPagination() {
+            let totalPages = Math.ceil(data.length / rowsPerPage);
+            pagination.innerHTML = "";
+
+            function createPageItem(page, label, disabled = false) {
+                let li = document.createElement("li");
+                li.className = `page-item ${disabled ? "disabled" : ""} ${currentPage === page ? "active" : ""}`;
+                li.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+                li.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    if (!disabled) {
+                        currentPage = page;
+                        renderTable();
+                        renderPagination();
+                    }
+                });
+                return li;
+            }
+
+            pagination.appendChild(createPageItem(1, "«", currentPage === 1));
+            let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+            let endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+
+            for (let i = startPage; i <= endPage; i++) {
+                pagination.appendChild(createPageItem(i, i));
+            }
+
+            pagination.appendChild(createPageItem(totalPages, "»", currentPage === totalPages));
+        }
+
+        async function fetchData(type) {
+            try {
+                const response = await fetch(`http://localhost/CO3049_assignment/public/admin/getMedia?type=${type}`);
+
+                const result = await response.json();
+                if (result.status) {
+                    data = result.data;
+                    renderTableHead();
+                    renderTable();
+                    renderPagination();
+                }
+            } catch (error) {
+                console.error("Lỗi khi fetch dữ liệu:", error);
+            }
+        }
+
+        
+        
+        searchInput.addEventListener("input", () => { currentPage = 1; renderTable(); renderPagination(); });
+        limitSelect.addEventListener("change", () => { rowsPerPage = parseInt(limitSelect.value); currentPage = 1; renderTable(); renderPagination(); });
+        
+    }
+
+    async function deleteMedia(id) {
+        console.log(id);
+        try {
+            if (!confirm("Bạn có chắc chắn muốn xóa không?")) return;
+            dataForm = new FormData();
+            dataForm.append('id', id);
+            const response = await fetch(`http://localhost/CO3049_assignment/public/admin/deleteMedia`, {
+                method: 'POST',
+                body: dataForm
+            });
+            const result = await response.json();
+            if (result.status) {
+                fetchAndRenderTable();
+            } else {
+                console.error("Lỗi khi xóa:", result.message);
+            }
+        } catch (error) {
+            console.error("Lỗi khi xóa:", error);
+        }
+    }
+    
+    async function viewMedia(id) {
+        try {
+            document.getElementById('mediaDetails').innerHTML = '';
+            document.getElementById('mediaDetails').innerHTML = `
+                <div class="text-center"><img src="http://localhost/CO3049_assignment/public/main/displayMedia?id=${id}" alt="Media Image" class="img-fluid"></div>
+            `;
+            const mediaModal = new bootstrap.Modal(document.getElementById('mediaModal'));
+            mediaModal.show();
+            
+        } catch (error) {
+            console.error("Lỗi ", error);
+        }
+        
+    }
+    
+    async function editMedia(id) {
+        try {
+            const response = await fetch(`http://localhost/CO3049_assignment/public/admin/getMedia?id=${id}`);
+            const result = await response.json();
+            if(!result.status) {
+                console.error("Lỗi khi lấy dữ liệu:", result.message);
+                return;
+            }
+            const movie = result.data[0];
+            document.querySelector('#updateModal #img').innerHTML = `
+                <img src="http://localhost/CO3049_assignment/public/main/displayMedia?id=${id}" alt="Media Image" style="height: 200px;">
+            `;
+
+
+            document.querySelector('#updateModal input[name="id"]').value = id;
+
+            document.querySelector('#updateModal input[name="type"]').value = movie.type || null;
+            console.log(movie);
+
+            document.querySelector('#updateModal input[name="title"]').value = movie.title;
+            document.querySelector('#updateModal input[name="description"]').value = movie.description;
+            document.querySelector('#updateModal input[name="status"]').value = movie.status;
+            
+            document.querySelector('#updateModal input[name="start_date"]').value = movie.start_date;
+            document.querySelector('#updateModal input[name="end_date"]').value = movie.end_date;
+            document.querySelector('#updateModal input[name="duration"]').value = movie.duration;
+            document.querySelector('#updateModal input[name="genre"]').value = movie.genre;
+            document.querySelector('#updateModal input[name="trailer"]').value = movie.trailer;
+            document.querySelector('#updateModal input[name="language"]').value = movie.language;
+            document.querySelector('#updateModal input[name="country"]').value = movie.country;
+            document.querySelector('#updateModal input[name="classification"]').value = movie.classification;
+
+
+
+
+            const updateModal = new bootstrap.Modal(document.getElementById('updateModal'));
+            updateModal.show();
+        } catch (error) {
+            console.error("Lỗi ", error);
+        }
+    }
+
+    async function updateMedia() {
+        try {
+            const dataForm = new FormData(document.getElementById('updateForm'));
+
+            const response = await fetch(`http://localhost/CO3049_assignment/public/admin/updateMedia`, {
+                method: 'POST',
+                body: dataForm
+            });
+            const result = await response.json();
+            if (result.status) {
+                document.getElementById('updateMessage').innerHTML = 'Cập nhật thành công!';
+                document.getElementById('updateMessage').style.color = 'green';
+                fetchAndRenderTable();
+            } else {
+                document.getElementById('updateMessage').innerHTML = result.message || 'Cập nhật thất bại!';
+                document.getElementById('updateMessage').style.color = 'red';
+            }
+        } catch (error) {
+            console.error("Lỗi ", error);
+            document.getElementById('updateMessage').innerHTML = 'Đã xảy ra lỗi!';
+            document.getElementById('updateMessage').style.color = 'red';
+        }
+    }
+</script>
+<script src="http://localhost/CO3049_assignment/public/mazor/assets/compiled/js/app.js"></script>
+<script src="http://localhost/CO3049_assignment/public/mazor/assets/static/js/components/dark.js"></script>
+
+
+</html>

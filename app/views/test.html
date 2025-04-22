@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crop ảnh theo tỷ lệ</title>
+  <style>
+    #crop-container {
+      width: 400px;
+      height: auto;
+      border: 2px dashed #999;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+      background: #eee;
+    }
+
+    #crop-box {
+      position: absolute;
+      overflow: hidden;
+      border: 2px solid red;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    #crop-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      cursor: move;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Crop ảnh theo tỷ lệ</h2>
+
+<input type="file" id="upload" />
+<select id="ratio-select">
+  <option value="1:1">1:1</option>
+  <option value="16:9">16:9</option>
+  <option value="3:5">3:5</option>
+  <option value="25:9">25:9</option>
+</select>
+
+<div id="crop-container">
+  <div id="crop-box">
+    <img id="crop-img" src="" draggable="false" />
+  </div>
+</div>
+
+<script>
+const uploadInput = document.getElementById('upload');
+const ratioSelect = document.getElementById('ratio-select');
+const cropContainer = document.getElementById('crop-container');
+const cropBox = document.getElementById('crop-box');
+const cropImg = document.getElementById('crop-img');
+
+let isDragging = false;
+let startX = 0, startY = 0;
+let imgX = 0, imgY = 0;
+
+function setCropBox(ratio) {
+  const containerWidth = 400;
+  const [w, h] = ratio.split(':').map(Number);
+  const boxWidth = containerWidth;
+  const boxHeight = containerWidth * (h / w);
+
+  cropBox.style.width = `${boxWidth}px`;
+  cropBox.style.height = `${boxHeight}px`;
+}
+
+ratioSelect.addEventListener('change', () => {
+  setCropBox(ratioSelect.value);
+});
+
+uploadInput.addEventListener('change', function () {
+  const file = this.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    cropImg.src = e.target.result;
+    cropImg.style.top = '0px';
+    cropImg.style.left = '0px';
+    imgX = 0;
+    imgY = 0;
+  };
+  reader.readAsDataURL(file);
+});
+
+cropImg.addEventListener('mousedown', function (e) {
+  isDragging = true;
+  startX = e.clientX;
+  startY = e.clientY;
+});
+
+document.addEventListener('mouseup', () => isDragging = false);
+
+document.addEventListener('mousemove', function (e) {
+  if (!isDragging) return;
+
+  const dx = e.clientX - startX;
+  const dy = e.clientY - startY;
+
+  imgX += dx;
+  imgY += dy;
+
+  cropImg.style.left = `${imgX}px`;
+  cropImg.style.top = `${imgY}px`;
+
+  startX = e.clientX;
+  startY = e.clientY;
+});
+
+// Init default
+setCropBox(ratioSelect.value);
+</script>
+
+</body>
+</html>

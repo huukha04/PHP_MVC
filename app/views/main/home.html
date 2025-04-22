@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/assets/styles/global.css">
+
+
+    <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/mazor/assets/compiled/css/app.css">
+
+
+    <!-- Swiper -->
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Swiper -->
+   
+
+</head>
+
+<body>
+    
+    <div id="app" class="h-100">
+        <div id="header"></div>
+        <main class="page-content container-lg h-100" style="margin-top: 150px;">  
+            <!-- Poster -->
+            <div class="col">
+                <div class="card shadow border round-3" style="background: inherit;">
+                    <div class="card-body p-0">
+                        <div class="swiper" id="displayPoster">
+                            <div class="swiper-wrapper">
+                                <!-- <div class="card-image" style="width: 100%; aspect-ratio: 21 / 7; overflow: hidden; position: relative; border-radius: 12px;">
+                                    <img 
+                                        src="http://localhost/CO3049_assignment/public/main/displayMedia?id=${poster.id}" 
+                                        alt="Poster"
+                                        style="width: 100%; height: 100%; object-fit: fill;" 
+                                    />
+                                </div> -->
+                            </div>
+
+
+                            <div class="swiper-pagination"></div>
+                        
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Showing -->
+            <div class="col">
+                <div class="card shadow border round-3" style="background: inherit;">
+                    <div class="card-header" style="background: inherit;">
+                        <h1 class="text-center">Phim đang chiếu</h1>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="displayShowing">
+                            <div class="swiper mx-5 mb-5">
+                                <div class="swiper-wrapper">
+                                </div>
+                            </div>
+                            
+
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>    
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Comming -->
+            <div class="col">
+                <div class="card shadow border round-3" style="background: inherit;">
+                    <div class="card-header" style="background: inherit;">
+                        <h1 class="text-center">Phim sắp chiếu</h1>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="displayComing">
+                            <div class="swiper mx-5 mb-5">
+                                <div class="swiper-wrapper">
+                                </div>
+                            </div>
+                            
+
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>    
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Deal -->
+            <div class="col">
+                <div class="card shadow border round-3" style="background: inherit;">
+                    <div class="card-header" style="background: inherit;">
+                        <h4>Khuyến mãi</h4>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="swiper" id="">
+                            <div class="swiper-wrapper">
+                            </div>
+
+
+                            <div class="swiper-pagination"></div>
+                        
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- Footer -->
+            <div id="footer"></div>
+                
+        </main>
+
+
+    </div>
+
+    
+
+</body>
+<script>
+    window.onload = function() {
+        loadHeader();
+        loadFooter();
+        loadPoster();
+        loadMovie();
+    };
+    async function loadHeader() {
+        const response = await fetch('http://localhost/CO3049_assignment/public/component/header');
+        const res= await response.text();
+        document.getElementById('header').innerHTML = res;
+    }
+    async function loadFooter() {
+        const response = await fetch('http://localhost/CO3049_assignment/public/component/footer');
+        const res= await response.text();
+        document.getElementById('footer').innerHTML = res;
+    }
+    async function loadPoster() {
+        try {
+            const response = await fetch('http://localhost/CO3049_assignment/public/main/getMedia?status=showing&type=poster');
+            const res = await response.json();
+            console.log(res);
+            if (res.status) {
+                let posters = res.data;
+                const wrapper = document.querySelector('#displayPoster .swiper-wrapper');
+                wrapper.innerHTML = '';
+
+                posters.forEach(poster => {
+                    const slide = document.createElement('div');
+                    slide.classList.add('swiper-slide');
+                    slide.innerHTML = `
+                        <div class="card-image" style="width: 100%; aspect-ratio: 21 / 7; overflow: hidden; position: relative; border-radius: 12px;">
+                            <img 
+                                src="http://localhost/CO3049_assignment/public/main/displayMedia?id=${poster.id}" 
+                                alt="Poster"
+                                style="width: 100%; height: 100%; object-fit: fill;" 
+                            />
+                        </div>
+                    `;
+                    wrapper.appendChild(slide);
+                });
+
+                new Swiper('#displayPoster', {
+                    loop: true,
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                    pagination: {
+                        el: '#displayPoster .swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '#displayPoster .swiper-button-next',
+                        prevEl: '#displayPoster .swiper-button-prev',
+                    },
+                    autoplay: {
+                        delay: 4000,
+                        disableOnInteraction: false,
+                    }
+                });
+            }
+        } catch (error) {
+            console.error('Error loading posters:', error);
+        }
+    }
+
+    async function loadMovie() {
+        try {
+            const response = await fetch('http://localhost/CO3049_assignment/public/main/getMedia?status=showing&type=movie');
+            const res = await response.json();
+            console.log(res);
+            
+            if (res.status) {
+                let movies = res.data;
+                
+                const today = new Date();
+                const todayStr = today.toISOString().split('T')[0];
+
+                // Filter movies
+                const coming = movies.filter(movie => movie.start_date > todayStr);
+                const showing = movies.filter(movie => movie.start_date <= todayStr);
+
+                // Create the result object
+                const result = {
+                    coming,
+                    showing
+                };
+                console.log(result);
+
+                const wrapperShowing = document.querySelector('#displayShowing .swiper-wrapper');
+                wrapperShowing.innerHTML = '';
+
+                showing.forEach(movie => {
+                    const slide = document.createElement('div');
+                    slide.classList.add('swiper-slide');
+                    slide.onclick = function () {
+                        window.open(`http://localhost/CO3049_assignment/public/main/media?media_id=${movie.id}`, '_blank');
+                    };
+
+                    slide.innerHTML = `
+                        <div class="card-image" style="width: 100%; aspect-ratio: 2 / 3; overflow: hidden; position: relative; border-radius: 12px;">
+                            <div class="classification classification-${movie.classification}">
+                                ${movie.classification}
+                            </div>
+
+                            
+                            <img 
+                                src="http://localhost/CO3049_assignment/public/main/displayMedia?id=${movie.id}" 
+                                alt="Poster"
+                                style="width: 100%; height: 100%; object-fit: fill;" 
+                            />
+                        </div>
+                        <div class="card-body p-0 pt-2">
+                            <h4 class="m-0" class="card-title">${movie.title}</h4>
+                            <p class="m-0">Thời lượng: ${movie.duration}</p>
+                            <p class="m-0">Thể loại: ${movie.genre}</p>
+                        </div>00
+                    `;
+
+                    wrapperShowing.appendChild(slide);
+                });
+
+                new Swiper('#displayShowing .swiper', {
+                    loop: true,
+                    breakpoints: {
+                        0: {          // Dưới 514px
+                            slidesPerView: 1
+                        },
+                        514: {       // >= 514px
+                            slidesPerView: 2
+                        },
+                        768: {       // >= 768px
+                            slidesPerView: 3
+                        },
+                        1024: {      // >= 1024px
+                            slidesPerView: 4
+                        }
+                    },
+                    spaceBetween: 10,
+                    pagination: {
+                        el: '#displayShowing .swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '#displayShowing .swiper-button-next',
+                        prevEl: '#displayShowing .swiper-button-prev',
+                    },
+                    autoplay: {
+                        delay: 4000,
+                        disableOnInteraction: false,
+                    }
+                });
+
+
+
+                const wrapperComing = document.querySelector('#displayComing .swiper-wrapper');
+                wrapperComing.innerHTML = '';
+
+                coming.forEach(movie => {
+                    const slide = document.createElement('div');
+                    slide.classList.add('swiper-slide');
+                    slide.onclick = function () {
+                        window.open(`http://localhost/CO3049_assignment/public/main/media?media_id=${movie.id}`, '_blank');
+                    };
+
+                    slide.innerHTML = `
+                        <div class="card-image" style="width: 100%; aspect-ratio: 2 / 3; overflow: hidden; position: relative; border-radius: 12px;">
+                            <div class="classification classification-${movie.classification}">
+                                ${movie.classification}
+                            </div>
+
+                            
+                            <img 
+                                src="http://localhost/CO3049_assignment/public/main/displayMedia?id=${movie.id}" 
+                                alt="Poster"
+                                style="width: 100%; height: 100%; object-fit: fill;" 
+                            />
+                        </div>
+                        <div class="card-body p-0 pt-2">
+                            <h4 class="m-0" class="card-title">${movie.title}</h4>
+                            <p class="m-0">Thời lượng: ${movie.duration}</p>
+                            <p class="m-0">Thể loại: ${movie.genre}</p>
+                        </div>
+                    `;
+
+                    wrapperComing.appendChild(slide);
+                });
+
+                new Swiper('#displayComing .swiper', {
+                    loop: true,
+                    breakpoints: {
+                        0: {          // Dưới 514px
+                            slidesPerView: 1
+                        },
+                        514: {       // >= 514px
+                            slidesPerView: 2
+                        },
+                        768: {       // >= 768px
+                            slidesPerView: 3
+                        },
+                        1024: {      // >= 1024px
+                            slidesPerView: 4
+                        }
+                    },
+                    spaceBetween: 10,
+                    pagination: {
+                        el: '#displayComing .swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '#displayComing .swiper-button-next',
+                        prevEl: '#displayComing .swiper-button-prev',
+                    },
+                    autoplay: {
+                        delay: 4000,
+                        disableOnInteraction: false,
+                    }
+                });
+            } else {
+                console.error('Failed to load movies:', res.message);           
+
+            }
+        } catch (error) {
+            console.error('Error loading :', error);
+        }
+    }
+
+</script>
+<script src="http://localhost/CO3049_assignment/public/mazor/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="http://localhost/CO3049_assignment/public/mazor/assets/compiled/js/app.js"></script>
+
+</html>

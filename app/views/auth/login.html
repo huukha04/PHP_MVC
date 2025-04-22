@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/assets/styles/global.css">
+
+
+    <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/mazor/assets/compiled/css/app.css">
+
+
+</head>
+
+<body>
+    
+    <div id="app">
+        <div id="header"></div>
+
+        <main class="page-content container-lg d-flex justify-content-center" style="margin-top: 100px;">  
+            <div class="card" style="width: 500px;">
+                <div class="card-body">
+                    <h1 class="auth-title py-2">Sign In</h1>
+        
+                    <form id="loginForm">
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" id="account" name="account" class="form-control form-control-xl" placeholder="Account">
+                            <div class="form-control-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group position-relative has-icon-left mb-4" id="password-group">
+                            <input type="password" id="password" name="password" class="form-control form-control-xl" placeholder="Password" disabled>
+                            <div class="form-control-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-check form-check-lg d-flex align-items-end mb-4">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label text-gray-600" for="flexCheckDefault">
+                                Keep me logged in
+                            </label>
+                        </div>
+                        
+                        <div class="alert" id="error-message" style="display: none;"></div>
+                    </form>
+                    <button id="btn" class="btn btn-primary btn-block btn-lg shadow-lg mt-5" onclick="login()" disabled>Sign In</button>
+                    
+                    <div class="text-center mt-5 text-lg fs-4">
+                        <p class="text-gray-600">Don't have an account? <a href="http://localhost/CO3049_assignment/public/auth/register" class="font-bold">Sign Up</a>.</p>
+                        <p><a class="font-bold" href="http://localhost/CO3049_assignment/public/auth/forgot">Forgot password?</a>.</p>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+
+
+    </div>
+
+    
+
+</body>
+
+<script>
+    
+    window.onload = function() {
+        loadHeader();
+    };
+    document.getElementById("loginForm").addEventListener("input", validateForm);
+
+
+
+
+    async function loadHeader() {
+        const response = await fetch('http://localhost/CO3049_assignment/public/component/header');
+        const res= await response.text();
+        document.getElementById('header').innerHTML = res;
+    }
+
+    async function validateForm() {
+        try {
+            const account = document.getElementById("account");
+            const password = document.getElementById("password");
+            const errorMessage = document.getElementById("error-message");
+            const button =  document.getElementById("btn");
+
+            if(account.value.trim() !== "") {
+                password.disabled = false;
+            } else {
+                password.disabled = true;
+            }
+
+            if(password.value.trim() !== "") {
+                button.disabled = false;
+            } else {
+                button.disabled = true;
+            }
+        } catch (error) {
+            console.error("Lỗi khi gửi form", error);
+        }
+    }
+
+    async function login() {
+        try {
+            const errorMessage = document.getElementById("error-message");
+
+            const dataForm = new FormData(document.getElementById("loginForm"));
+
+            // Gửi yêu cầu đăng ký đến server
+            const response = await fetch('http://localhost/CO3049_assignment/public/auth/login', {
+                method: 'POST',
+                body: dataForm,
+            });
+
+            const data = await response.json();
+            console.log(data);
+            if (data.status) {
+                errorMessage.textContent = data.message || "Đăng nhập thành công.";
+                errorMessage.classList.remove("alert-danger");
+                errorMessage.classList.add("alert-success");
+                errorMessage.style.display = "block";
+
+
+                window.location.href = 'http://localhost/CO3049_assignment/public/';
+            } else {
+                errorMessage.textContent = data.message || "Đăng nhập thất bại. Vui lòng thử lại.";
+                errorMessage.classList.add("alert-danger");
+                errorMessage.style.display = "block";
+            }
+        } catch (error) {
+            console.error("Lỗi khi gửi form", error);
+        }
+    }
+
+
+</script>
+<script src="http://localhost/CO3049_assignment/public/mazor/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="http://localhost/CO3049_assignment/public/mazor/assets/compiled/js/app.js"></script>
+
+</html>
