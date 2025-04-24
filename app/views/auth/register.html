@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/mazor/assets/compiled/css/app.css">
 
+    <script src="http://localhost/CO3049_assignment/public/assets/scripts/components.js"></script>
 
 </head>
 
@@ -74,12 +75,15 @@
     
 
 </body>
+<script>
+    renderHeader().then(html => {
+        document.getElementById('header').insertAdjacentHTML("beforeend", html);
+    });
 
+</script>
 <script>
     
-    window.onload = function() {
-        loadHeader();
-    };
+
     document.getElementById("registerForm").addEventListener("input", validateForm);
 
 

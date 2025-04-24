@@ -15,8 +15,6 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
-
 CREATE TABLE IF NOT EXISTS media (
     id INT AUTO_INCREMENT PRIMARY KEY,
     filename VARCHAR(255),
@@ -47,7 +45,6 @@ CREATE TABLE IF NOT EXISTS cinema (
     close_time TIME 
 );
 
-
 -- Bảng Room (Phòng chiếu)
 CREATE TABLE IF NOT EXISTS room (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -60,14 +57,12 @@ CREATE TABLE IF NOT EXISTS room (
 CREATE TABLE IF NOT EXISTS seat (
     id INT AUTO_INCREMENT PRIMARY KEY,
     room_id INT,
-    cinema_id INT,
     code VARCHAR(10),
     row INT,
     col INT,  
     type ENUM('standard', 'vip', 'couple', 'maintenance', 'none') DEFAULT 'standard',  
     price DECIMAL(10,2)
 );
-
 
 -- Bảng Showtime (Suất chiếu)
 CREATE TABLE IF NOT EXISTS showtime (
@@ -81,7 +76,6 @@ CREATE TABLE IF NOT EXISTS showtime (
     end_time DATETIME
 );
 
-
 CREATE TABLE IF NOT EXISTS product (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cinema_id INT,
@@ -91,9 +85,8 @@ CREATE TABLE IF NOT EXISTS product (
     quality INT DEFAULT 999
 );
 
-
-
 CREATE TABLE IF NOT EXISTS `order` (
+    user_id INT,
     email VARCHAR(255) ,
     name VARCHAR(100),
     order_code INT  PRIMARY KEY,

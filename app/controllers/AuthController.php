@@ -73,7 +73,23 @@ class AuthController {
         $this->view('auth/login');
     }
     
-    
+    public function getRole() {
+        header ('Content-Type: application/json');
+        if (isset($_SESSION)) {
+            if(isset($_SESSION['user'])) {
+                echo json_encode([
+                    'status' => true,
+                    'role' => $_SESSION['user']['role'],
+                ]);
+                exit;
+            }
+        }
+        echo json_encode([
+            'status' => false,
+            'message' => 'User not logged in',
+        ]);
+        exit;
+    }
     
     public function logout() {
         session_unset();

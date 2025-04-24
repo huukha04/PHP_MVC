@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post</title>
+    <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/assets/styles/global.css">
+
+    <script src="http://localhost/CO3049_assignment/public/assets/scripts/components.js"></script>
+
+    <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/mazor/assets/compiled/css/app.css">
+
+
+
+</head>
+
+<body>
+    
+    <div id="app">
+        <div id="header"></div>
+        <main class="page-content container-lg flex-fill" style="margin-top: 150px;">
+            <section class="row">
+                <div class="col-12 col-md-4">
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <div>Avatar</div>
+                            <div>Name</div>
+                            <div>Thay đổi ảnh đại diện</div>
+                            <div>Điểm hạng</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group">
+                                <a href="http://localhost/CO3049_assignment/public/customer/profile?display=profileForm" class="list-group-item list-group-item-action">Thông tin cá nhân</a>
+                                <a href="http://localhost/CO3049_assignment/public/customer/profile?display=changePasswordForm" class="list-group-item list-group-item-action">Đổi mật khẩu</a>
+                                <a href="http://localhost/CO3049_assignment/public/customer/profile?display=orderDisplay" class="list-group-item list-group-item-action">Lịch sử mua hàng</a>
+                            </div>
+
+                        </div>
+                        <div class="card-footer">
+                            <a href="http://localhost/CO3049_assignment/public/auth/logout" class="list-group-item list-group-item-action">Đăng xuất</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-8">
+                    <div class="card shadow">
+                        <form id="profileForm">
+                            <div class="card-header">
+                                <h4 class="card-title">Thông tin cá nhân</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group mb-3">
+                                    <div>Avatar</div>
+                                </div>  
+                                <div class="form-group mb-3">
+                                    <label for="name">Họ và tên</label>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Họ và tên" required>
+                                </div>  
+                                <div class="form-group mb-3">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="phone">Số điện thoại</label>
+                                    <input type="text" id="phone" name="phone" class="form-control" placeholder="Số điện thoại" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="address">Địa chỉ</label>
+                                    <input type="text" id="address" name="address" class="form-control" placeholder="Địa chỉ" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="idCard">Số CMND/CCCD</label>
+                                    <input type="text" id="idCard" name="idCard" class="form-control" placeholder="Số CMND/CCCD" required>
+                                </div>  
+                            </div>  
+                        </form>
+
+
+                        <form id="changePasswordForm">
+                            <div class="card-header">
+                                <h4 class="card-title">Đổi mật khẩu</h4>
+                            </div>  
+                            <div class="card-body">
+                                <div class="form-group mb-3">
+                                    <label for="oldPassword">Mật khẩu cũ</label>
+                                    <input type="password" id="oldPassword" name="oldPassword" class="form-control" placeholder="Mật khẩu cũ" required>
+                                </div>  
+                                <div class="form-group mb-3">
+                                    <label for="newPassword">Mật khẩu mới</label>
+                                    <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="Mật khẩu mới" required>
+                                </div>  
+                                <div class="form-group mb-3">
+                                    <label for="confirmPassword">Xác nhận mật khẩu mới</label>
+                                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Xác nhận mật khẩu mới" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="otp">Mã OTP</label>
+                                    <input type="text" id="otp" name="otp" class="form-control" placeholder="Mã OTP" required>
+                                </div>  
+                            </div>
+                        </form>
+
+                        <div id="orderDisplay"> 
+                            <div class="card-header">
+                                <h4 class="card-title">Lịch sử mua hàng</h4>
+                            </div>  
+                            
+                        </div>
+
+
+
+
+                    </div>  
+
+                </div>
+                
+            </section>
+
+
+            <div id="footer"></div>
+
+                
+        </main>
+
+
+
+    </div>
+
+    
+
+</body>
+<script>
+    document.getElementById('footer').insertAdjacentHTML("beforeend", renderFooter());
+    renderHeader().then(html => {
+        document.getElementById('header').insertAdjacentHTML("beforeend", html);
+    });
+
+</script>
+<script>
+    window.onload = function () {
+        const params = new URLSearchParams(window.location.search);
+        const display = params.get('display');
+    
+        // Ẩn tất cả các form
+        document.getElementById('profileForm').style.display = 'none';
+        document.getElementById('changePasswordForm').style.display = 'none';
+        document.getElementById('orderDisplay').style.display = 'none';
+    
+        // Hiện form tương ứng
+        if (display === 'profileForm') {
+            document.getElementById('profileForm').style.display = 'block';
+        } else if (display === 'changePasswordForm') {
+            document.getElementById('changePasswordForm').style.display = 'block';
+        } else if (display === 'orderDisplay') {
+            document.getElementById('orderDisplay').style.display = 'block';
+        }
+    
+        // 👉 Thêm highlight cho link được chọn
+        const links = document.querySelectorAll('.list-group-item');
+        links.forEach(link => {
+            if (link.href.includes(display)) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+    </script>
+    
+<script src="http://localhost/CO3049_assignment/public/mazor/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="http://localhost/CO3049_assignment/public/mazor/assets/compiled/js/app.js"></script>
+
+</html>

@@ -11,6 +11,7 @@
 
 
     <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/mazor/assets/compiled/css/app.css">
+    <script src="http://localhost/CO3049_assignment/public/assets/scripts/components.js"></script>
 
 
     <style>
@@ -81,7 +82,7 @@
 
 <body>
     
-    <div id="app" class="h-100">
+    <div id="app">
         <div id="header"></div>
         <main class="page-content container-lg h-100" style="margin-top: 150px;">  
             <secsion class="col">
@@ -157,7 +158,7 @@
                                                         <div class="form-text text-danger">Chúng tôi sẽ gửi thông tin vé qua email của bạn</div>
                                                     </div>
                                 
-                                                </form>
+                 0                               </form>
                                             </div>
                                         </div>
                                     </div>
@@ -244,9 +245,12 @@
     
 
 </body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $('#header').load('http://localhost/CO3049_assignment/public/component/header');
+    document.getElementById('footer').insertAdjacentHTML("beforeend", renderFooter());
+    renderHeader().then(html => {
+        document.getElementById('header').insertAdjacentHTML("beforeend", html);
+    });
+
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -314,17 +318,11 @@
     const urlParams = new URLSearchParams(window.location.search);
     const showtimeId = urlParams.get('showtime_id');
     window.onload = function() {
-        loadFooter();
         loadSeat();
         loadBookingInfo();
 
     };
 
-    async function loadFooter() {
-        const response = await fetch('http://localhost/CO3049_assignment/public/component/footer');
-        const res= await response.text();
-        document.getElementById('footer').innerHTML = res;
-    }
 
     async function loadSeat() {
         try {

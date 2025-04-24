@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/assets/styles/global.css">
     <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/mazor/assets/compiled/css/app.css">
 
+    <script src="http://localhost/CO3049_assignment/public/assets/scripts/components.js"></script>
+
 </head>
 
 
@@ -48,20 +50,11 @@
 </body>
 
 <script>
-    window.onload = function() {
-        loadHeader();
-        loadFooter();
-    };
-    async function loadHeader() {
-        const response = await fetch('http://localhost/CO3049_assignment/public/component/header');
-        const res= await response.text();
-        document.getElementById('header').innerHTML = res;
-    }
-    async function loadFooter() {
-        const response = await fetch('http://localhost/CO3049_assignment/public/component/footer');
-        const res= await response.text();
-        document.getElementById('footer').innerHTML = res;
-    }
+    document.getElementById('footer').insertAdjacentHTML("beforeend", renderFooter());
+    renderHeader().then(html => {
+        document.getElementById('header').insertAdjacentHTML("beforeend", html);
+    });
+
 </script>
 <script src="http://localhost/CO3049_assignment/public/mazor/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="http://localhost/CO3049_assignment/public/mazor/assets/compiled/js/app.js"></script>

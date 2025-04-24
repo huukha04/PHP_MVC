@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/mazor/assets/compiled/css/app-dark.css">
 
 
+    <script src="http://localhost/CO3049_assignment/public/assets/scripts/components.js"></script>
 
 </head>
 <script src="http://localhost/CO3049_assignment/public/mazor/assets/static/js/initTheme.js"></script>
@@ -200,13 +201,11 @@
 
 </body>
 <script>
-loadSidebar();
+    document.getElementById("sidebar").insertAdjacentHTML("beforeend", renderSidebar());
+    document.body.insertAdjacentHTML("beforeend", renderToggleDark());
+</script>
+<script>
 
-async function loadSidebar() {
-    const response = await fetch('http://localhost/CO3049_assignment/public/component/sidebar');
-    const res= await response.text();
-    document.getElementById('sidebar').innerHTML = res;
-}
 
 
 </script>

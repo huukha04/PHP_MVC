@@ -10,6 +10,7 @@
 
 
     <link rel="stylesheet" href="http://localhost/CO3049_assignment/public/mazor/assets/compiled/css/app.css">
+    <script src="http://localhost/CO3049_assignment/public/assets/scripts/components.js"></script>
 
 
 </head>
@@ -84,13 +85,15 @@
     
 
 </body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $('#header').load('http://localhost/CO3049_assignment/public/component/header');
+    document.getElementById('footer').insertAdjacentHTML("beforeend", renderFooter());
+    renderHeader().then(html => {
+        document.getElementById('header').insertAdjacentHTML("beforeend", html);
+    });
+
 </script>
 <script>
     window.onload = function() {
-        loadFooter();
         loadPaymentInfo();
 
 

@@ -29,7 +29,6 @@ class MainController {
 
 
 
-
     
 
     public function getMedia() {

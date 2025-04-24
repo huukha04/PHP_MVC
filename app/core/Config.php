@@ -23,5 +23,5 @@ define('WAIT_TIME', 300);
 
 
 
-define('ROOT', 'http://localhost/CO3049_assignment/public/');
+define('ROOT', '../public/');
 'http://localhost/phpmyadmin/';
